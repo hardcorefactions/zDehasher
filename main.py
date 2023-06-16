@@ -45,6 +45,12 @@ def bruteforce(hash, salt):
             final = hashlib.sha512((var2 + salt).encode()).hexdigest()
             if final == hash:
                 return word
+    if "SHA256" in hash:
+        salt = hash.split("$")[1]
+        wow = hash.split("$")[2]
+        for word in words:
+            if hashlib.sha256(hashlib.sha256(word.encode()).hexdigest().encode() + salt.encode()).hexdigest() == wow:
+                return word
     return hash
 
 words = []
@@ -65,7 +71,9 @@ for i in logo.split("\n"):
     print(textUtil.printg(i, "#ff0000", "#0000ff"))
 print()
 try:
-    words = open(file, encoding='latin-1').readlines()
+    with open(file, encoding='latin-1') as f:
+        for i in f.readlines():
+            words.append(i.replace("\n", ""))
     print("  [~] Loaded succesfully " + str(len(words)) + " passwords.")
     time.sleep(3)
 except Exception as e:
