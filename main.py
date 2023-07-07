@@ -34,27 +34,31 @@ def printcenter(text):
 def bruteforce(hash, salt):
     if len(hash) == 64:
         for password in words:
-            if hashlib.sha256(password.encode()).hexdigest() == hash:
+            password_hash = hashlib.sha256(password.encode()).hexdigest()
+            if password_hash == hash:
                 return password
-    if len(hash) == 86 or len(hash) == 85:
-        salt1 = hash.split("$")[2]
-        hash1 = hash.split("$")[3]
+    elif len(hash) == 86 or len(hash) == 85:
+        parts = hash.split("$")
+        salt1 = parts[2]
+        hash1 = parts[3]
         for word in words:
             var2 = hashlib.sha256(word.encode()).hexdigest()
-            final = hashlib.sha256(var2.encode() + salt1.encode()).hexdigest()
+            final = hashlib.sha256((var2 + salt1).encode()).hexdigest()
             if final == hash1:
                 return word
-    if len(hash) == 128:
+    elif len(hash) == 128:
         for word in words:
             var2 = hashlib.sha512(word.encode()).hexdigest()
             final = hashlib.sha512((var2 + salt).encode()).hexdigest()
             if final == hash:
                 return word
-    if "SHA256" in hash:
-        salt = hash.split("$")[1]
-        wow = hash.split("$")[2]
+    elif "SHA256" in hash:
+        parts = hash.split("$")
+        salt = parts[1]
+        wow = parts[2]
         for word in words:
-            if hashlib.sha256(hashlib.sha256(word.encode()).hexdigest().encode() + salt.encode()).hexdigest() == wow:
+            word_hash = hashlib.sha256(hashlib.sha256(word.encode()).hexdigest().encode() + salt.encode()).hexdigest()
+            if word_hash == wow:
                 return word
     return hash
 
