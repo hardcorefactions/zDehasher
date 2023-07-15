@@ -1,5 +1,5 @@
-# zDehasher
-Simple password dehasher. [Duny Studios](https://discord.gg/francia)
+# zDehasher - (Duny Studios)[https://discord.gg/francia]
+Simple password dehasher.
 # What does it try to dehash?
 
  - DynamicBungeeAuth hashes
