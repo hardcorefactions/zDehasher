@@ -1,4 +1,4 @@
-# zDehasher
+# zDehasher (Duny Studios)[https://discord.gg/francia]
 Simple password dehasher
 # What does it try to dehash?
 
