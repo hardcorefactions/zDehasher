@@ -60,6 +60,15 @@ def bruteforce(hash, salt):
             word_hash = hashlib.sha256(hashlib.sha256(word.encode()).hexdigest().encode() + salt.encode()).hexdigest()
             if word_hash == wow:
                 return word
+    elif "SHA512" in hash:
+        parts = hash.split("$")
+        salt = parts[1]
+        wow = parts[2]
+        for word in words:
+            passenc = hashlib.sha512(word.encode()).hexdigest()
+            word_hash = hashlib.sha512((passenc + salt).encode()).hexdigest()
+            if word_hash == wow:
+                return word
     return hash
 
 ##############################################################################################
@@ -75,6 +84,7 @@ def main():
         printcenter(f"{Fore.YELLOW}{logo}")
         print()
         printcenter(f"{Fore.RESET}La wordlist no ha sido cargada.")
+        time.sleep(3)
         print()
         main()
     else:
@@ -87,40 +97,41 @@ def main():
             print(f"{Fore.LIGHTBLUE_EX}             [LOG]{Fore.RESET} Han sido cargadas {Fore.RED}{len(words)} {Fore.RESET}contraseñas.", end="\r")
             print()
             print()
-            hash, salt = "", ""
-            hash = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Introduce un hash: {Fore.RESET}")
-            print()
-            if len(hash) == 128:
-                salt = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Introduce un salt: {Fore.RESET}")
-            final = bruteforce(hash, salt)
-            if final == hash:
-                os.system("cls || clear")
-                printcenter(f"{Fore.YELLOW}{logo}")
+            while True:
+                hash, salt = "", ""
+                hash = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Introduce un hash: {Fore.RESET}")
                 print()
-                printcenter(f"{Fore.LIGHTBLUE_EX}[LOG]{Fore.RESET} La contraseña no ha sido encontrada.")
-                time.sleep(3)
-                main()
-            if final != hash:
-                os.system("cls || clear")
-                printcenter(f"{Fore.YELLOW}{logo}")
-                print()
-                printcenter(f"{Fore.LIGHTBLUE_EX}[LOG]{Fore.RESET} La contraseña es -> {Fore.RED}{final}")
-                print()
-                printcenter(f"{Fore.YELLOW}(1) {Fore.RESET}Volver")
-                printcenter(f"{Fore.YELLOW}(2) {Fore.RESET}Salir")
-                print()
-                option = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Seleccione una opcion: {Fore.RESET}")
-                if option == "1":
-                    main()
-                elif option == "2":
+                if len(hash) == 128:
+                    salt = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Introduce un salt: {Fore.RESET}")
+                final = bruteforce(hash, salt)
+                if final == hash:
                     os.system("cls || clear")
-                    exit()
-                else:
-                    os.system("cls || clear")
-                    printcenter(f"{Fore.RED}{error}")
-                    printcenter(f"{Fore.RESET}¡Debes de seleccionar una opcion valida!")
+                    printcenter(f"{Fore.YELLOW}{logo}")
+                    print()
+                    printcenter(f"{Fore.LIGHTBLUE_EX}[LOG]{Fore.RESET} La contraseña no ha sido encontrada.")
                     time.sleep(3)
                     main()
+                if final != hash:
+                    os.system("cls || clear")
+                    printcenter(f"{Fore.YELLOW}{logo}")
+                    print()
+                    printcenter(f"{Fore.LIGHTBLUE_EX}[LOG]{Fore.RESET} La contraseña es -> {Fore.RED}{final}")
+                    print()
+                    printcenter(f"{Fore.YELLOW}(1) {Fore.RESET}Volver")
+                    printcenter(f"{Fore.YELLOW}(2) {Fore.RESET}Salir")
+                    print()
+                    option = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Seleccione una opcion: {Fore.RESET}")
+                    if option == "1":
+                        main()
+                    elif option == "2":
+                        os.system("cls || clear")
+                        exit()
+                    else:
+                        os.system("cls || clear")
+                        printcenter(f"{Fore.RED}{error}")
+                        printcenter(f"{Fore.RESET}¡Debes de seleccionar una opcion valida!")
+                        time.sleep(3)
+                        main()
 
 
 ##############################################################################################
