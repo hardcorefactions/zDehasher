@@ -101,8 +101,7 @@ def main():
                 hash, salt = "", ""
                 hash = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Introduce un hash: {Fore.RESET}")
                 print()
-                if len(hash) == 128:
-                    salt = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Introduce un salt: {Fore.RESET}")
+                salt = input(f"{Fore.RED} [»] {Fore.LIGHTBLUE_EX}Introduce un salt: {Fore.RESET}")
                 final = bruteforce(hash, salt)
                 if final == hash:
                     os.system("cls || clear")
