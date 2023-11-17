@@ -99,7 +99,13 @@ def main():
                     printcenter(f"{Fore.YELLOW}{jsexp_gay}")
                     printcenter(f"{Fore.LIGHTBLUE_EX}[LOG]{Fore.WHITE} Hash/Salt invalido o contraseña no encontrada.")
                     time.sleep(5)
-                    main()
+                    clear_screen()
+                    printcenter(f"{Fore.YELLOW}{jsexp_gay}")
+                    printcenter(f"{Fore.LIGHTBLUE_EX}             [LOG]{Fore.WHITE} Han sido cargadas {Fore.RED}{len(words)} {Fore.WHITE}contraseñas.")
+                    print()
+                    printcenter(f"{Fore.LIGHTBLUE_EX}[INFO] {Fore.WHITE}Introduce el Hash, luego el Salt. {Fore.YELLOW}¿No tienes Salt? {Fore.WHITE}Dejalo vacio.")
+                    print()
+                    continue
                 if final != hash:
                     clear_screen()
                     printcenter(f"{Fore.YELLOW}{jsexp_gay}")
